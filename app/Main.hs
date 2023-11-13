@@ -3,10 +3,13 @@ module Main where
 import System.Environment
 import System.Directory
 
+resolvePathToWatch = do
+    args <- getArgs
+    path <- (makeAbsolute (head args))
+    return path
+
 main :: IO ()
 main = do 
-    args <- getArgs
     putStrLn "Hello, Haskell!"
-    print (head args)
-    path <- (makeAbsolute ".")
-    putStrLn path
+    pathToWatch <- resolvePathToWatch
+    putStrLn pathToWatch
