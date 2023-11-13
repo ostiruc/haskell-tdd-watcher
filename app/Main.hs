@@ -10,6 +10,5 @@ resolvePathToWatch = do
 
 main :: IO ()
 main = do 
-    putStrLn "Hello, Haskell!"
     pathToWatch <- resolvePathToWatch
-    putStrLn pathToWatch
+    putStrLn ("Watching: " ++ pathToWatch)
