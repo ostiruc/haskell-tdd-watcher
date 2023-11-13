@@ -12,8 +12,9 @@ resolvePathToWatch = do
 
 runTests :: String -> IO ()
 runTests dir = do 
-    (_, Just hout, _, _) <- createProcess (proc "cabal" ["test"]) { cwd = Just dir }
-    print hout
+    putStrLn "\n*** TEST RUN ***\n"
+    _ <- createProcess (proc "cabal" ["test"]) { cwd = Just dir }
+    return ()
 
 main :: IO ()
 main = do 
