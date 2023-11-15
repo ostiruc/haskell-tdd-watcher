@@ -8,3 +8,7 @@
 - US.6 - When running tests, the command 'cabal test' is run in directory being watched.
 - US.7 - When running tests, the ouptut of the command 'cabal test' is outputted by the program
 - US.8 - When no argument is given, it watches the current directory
+
+# Bugs
+
+- B.1 - A failing test will stop the program; it should run and display the errors
