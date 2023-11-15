@@ -19,5 +19,8 @@ main :: IO ()
 main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
-    runTests pathToWatch
-    mainLoop pathToWatch
+    files <- filesUnderPath pathToWatch
+    print $ files
+    print $ filter (endsWith ".hs") files
+    -- runTests pathToWatch
+    -- mainLoop pathToWatch

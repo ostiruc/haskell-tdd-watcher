@@ -5,8 +5,8 @@ import Test.Tasty.HUnit
 
 import Helpers
 
-tests :: TestTree
-tests = 
+unitTests :: TestTree
+unitTests = 
     testGroup "Unit Tests"
     [ 
         testGroup "endsWith" 
@@ -18,8 +18,16 @@ tests =
         [
             testCase "suffix does not exist" $ removeSuffix "/" "a/b/c" @?= "a/b/c",
             testCase "suffix does not exist" $ removeSuffix "/" "a/b/c/" @?= "a/b/c"
+        ],
+        testGroup "scratch"
+        [
+            let 
+                dirContents = [".", "..", "a"]
+                fold = foldr (\x acc -> filter (/= x) acc) dirContents [".", ".."]
+            in
+                testCase "testing foldr" $ fold @?= ["a"]
         ]
     ]
 
 main :: IO ()
-main = defaultMain tests
+main = defaultMain unitTests
