@@ -18,10 +18,30 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
+endsWith :: String -> String -> Bool
+endsWith pattern s
+    | s == pattern = True
+    | s == [] = False
+    | otherwise = endsWith pattern (tail s)
+
+hasChanges :: String -> IO Bool
+hasChanges filePath = do
+    isDir <- doesDirectoryExist filePath
+    if isDir then do
+        dirContents <- getDirectoryContents filePath
+        print dirContents
+        hasChanges (filePath ++ "imaginary-file.hs")
+    else if endsWith ".hs" filePath then do
+        putStrLn ("Found .hs file: " ++ filePath)
+        return True
+    else
+        return False
+
 mainLoop :: String -> IO ()
 mainLoop pathToWatch = do
     threadDelay 1000000
-    runTests pathToWatch
+    hasChanges <- hasChanges pathToWatch
+    if hasChanges then runTests pathToWatch else putStrLn ("skipped")
     mainLoop pathToWatch
 
 main :: IO ()
