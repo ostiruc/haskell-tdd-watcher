@@ -1,5 +1,6 @@
 module Main where
 
+import Control.Concurrent
 import System.Environment
 import System.Directory
 import System.Process
@@ -17,8 +18,15 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
+mainLoop :: String -> IO ()
+mainLoop pathToWatch = do
+    threadDelay 1000000
+    runTests pathToWatch
+    mainLoop pathToWatch
+
 main :: IO ()
-main = do 
+main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
     runTests pathToWatch
+    mainLoop pathToWatch
