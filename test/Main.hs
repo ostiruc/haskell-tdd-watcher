@@ -3,13 +3,14 @@ module Main where
 import Test.Tasty
 import Test.Tasty.HUnit
 
-stub :: Bool
-stub = True
+endsWith :: String -> String -> Bool
+endsWith _ _ = False
 
 tests :: TestTree
-tests = testGroup "stub" 
+tests = 
+    testGroup "endsWith" 
     [
-        testCase "stub should return true" $ stub @?= True
+        testCase "stub" $ endsWith "foo" "bar" @?= False
     ]
 
 main :: IO ()
