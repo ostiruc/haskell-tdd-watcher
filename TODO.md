@@ -1,4 +1,4 @@
-User Stories
+# User Stories
 
 - DONE - US.1 - The program starts by giving one argument: the directory to watch
 - DONE - US.2 - When the program starts it runs the tests
