@@ -2,9 +2,7 @@ module Main where
 
 import Test.Tasty
 import Test.Tasty.HUnit
-
-endsWith :: String -> String -> Bool
-endsWith _ _ = False
+import Helpers
 
 tests :: TestTree
 tests = 

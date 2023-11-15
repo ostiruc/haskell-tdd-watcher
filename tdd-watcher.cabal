@@ -21,7 +21,7 @@ maintainer:         ositruc@gmail.com
 -- category:
 extra-source-files: CHANGELOG.md
 
-executable tdd-watcher
+executable httd
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
@@ -33,6 +33,13 @@ executable tdd-watcher
     hs-source-dirs:   app
     default-language: Haskell2010
 
+library
+    exposed-modules:  Helpers
+
+    build-depends:    base ^>=4.15.1.0
+    hs-source-dirs:   lib
+    default-language: Haskell2010
+
 test-suite tests
     type: exitcode-stdio-1.0
     main-is:          Main.hs
@@ -42,6 +49,6 @@ test-suite tests
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base ^>=4.15.1.0, tasty, tasty-hunit
+    build-depends:    base ^>=4.15.1.0, tasty, tasty-hunit, tdd-watcher
     hs-source-dirs:   test
     default-language: Haskell2010
