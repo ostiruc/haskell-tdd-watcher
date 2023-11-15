@@ -8,7 +8,7 @@ import Helpers
 mainLoop :: String -> IO ()
 mainLoop pathToWatch = do
     threadDelay 1000000
-    hasChanges <- hasChanges pathToWatch
+    hasChanges <- hasChanges [pathToWatch]
     if hasChanges then 
         runTests pathToWatch 
     else 

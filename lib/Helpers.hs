@@ -29,13 +29,14 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
-hasChanges :: String -> IO Bool
-hasChanges filePath = do
+hasChanges :: [String] -> IO Bool
+hasChanges (filePath:_) = do
+    -- TODO: Flip around to do tail end directory recurison
     isDir <- doesDirectoryExist filePath
     if isDir then do
         dirContents <- getDirectoryContents filePath
         print dirContents
-        hasChanges (filePath ++ "imaginary-file.hs")
+        hasChanges [filePath ++ "imaginary-file.hs"]
     else if endsWith ".hs" filePath then do
         putStrLn ("Found .hs file: " ++ filePath)
         return True
