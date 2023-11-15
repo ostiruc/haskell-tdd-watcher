@@ -10,11 +10,17 @@ endsWith pattern s
     | s == [] = False
     | otherwise = endsWith pattern (tail s)
 
+removeSuffix :: String -> String -> String
+removeSuffix suffix str
+    | str == suffix = []
+    | str == [] = []
+    | otherwise = (head str) : (removeSuffix suffix (tail str))
+
 resolvePathToWatch :: IO String
 resolvePathToWatch = do
     args <- getArgs
     path <- (makeAbsolute (head args))
-    return path
+    return (removeSuffix "/" path)
 
 runTests :: String -> IO ()
 runTests dir = do 
