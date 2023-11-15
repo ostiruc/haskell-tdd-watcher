@@ -18,15 +18,15 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
-mainLoop :: IO ()
-mainLoop = do
+mainLoop :: String -> IO ()
+mainLoop pathToWatch = do
     threadDelay 1000000
-    putStrLn ("This is where tests should regularly run")
-    mainLoop
+    runTests pathToWatch
+    mainLoop pathToWatch
 
 main :: IO ()
 main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
     runTests pathToWatch
-    mainLoop
+    mainLoop pathToWatch
