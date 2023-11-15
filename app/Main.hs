@@ -18,10 +18,15 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
+mainLoop :: IO ()
+mainLoop = do
+    threadDelay 1000000
+    putStrLn ("This is where tests should regularly run")
+    mainLoop
+
 main :: IO ()
 main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
     runTests pathToWatch
-    threadDelay 2000000
-    putStrLn ("I slept for 2 seconds")
+    mainLoop
