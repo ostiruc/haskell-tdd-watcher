@@ -1,4 +1,7 @@
 module Helpers where
 
 endsWith :: String -> String -> Bool
-endsWith _ _ = False
+endsWith pattern s
+    | s == pattern = True
+    | s == [] = False
+    | otherwise = endsWith pattern (tail s)

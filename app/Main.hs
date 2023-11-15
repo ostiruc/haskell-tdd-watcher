@@ -5,6 +5,8 @@ import System.Environment
 import System.Directory
 import System.Process
 
+import Helpers
+
 resolvePathToWatch :: IO String
 resolvePathToWatch = do
     args <- getArgs
@@ -17,12 +19,6 @@ runTests dir = do
     output <- readCreateProcess (proc "cabal" ["test"]) { cwd = Just dir } ""
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
-
-endsWith :: String -> String -> Bool
-endsWith pattern s
-    | s == pattern = True
-    | s == [] = False
-    | otherwise = endsWith pattern (tail s)
 
 hasChanges :: String -> IO Bool
 hasChanges filePath = do
