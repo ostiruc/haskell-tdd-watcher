@@ -66,16 +66,3 @@ filesUnderPaths (fp:fps) ignores = do
         return (fp:fpsFiles)
     else
         filesUnderPaths fps ignores
-
-hasChanges :: [String] -> IO Bool
-hasChanges (filePath:_) = do
-    isDir <- doesDirectoryExist filePath
-    if isDir then do
-        dirContents <- getDirectoryContents filePath
-        print dirContents
-        hasChanges [filePath ++ "imaginary-file.hs"]
-    else if endsWith ".hs" filePath then do
-        putStrLn ("Found .hs file: " ++ filePath)
-        return True
-    else
-        return False
