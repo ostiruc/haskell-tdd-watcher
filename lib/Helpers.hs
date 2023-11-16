@@ -1,5 +1,6 @@
 module Helpers where
 
+import Data.Time
 import System.Environment
 import System.Directory
 import System.Process
@@ -29,11 +30,17 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
--- TODO: Figure out watched files
---data WatchedFile = ...
+data WatchedFile = WatchedFile { 
+    filePath :: String, 
+    timeStamp :: UTCTime 
+} deriving (Show, Eq)
 
---getWatchedFiles :: String -> [String] [WatchedFile]
---modTime <- getModificationTime (head hsFiles)
+watchFiles :: [String] -> IO [WatchedFile]
+watchFiles [] = return []
+watchFiles (fp:fps) = do
+    timeStamp <- getModificationTime fp
+    watchedFiles <- watchFiles fps
+    return ((WatchedFile fp timeStamp):watchedFiles)
 
 filesUnderPath :: String -> [String] -> IO [String] 
 filesUnderPath filePath ignores = do 

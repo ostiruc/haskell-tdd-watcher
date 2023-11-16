@@ -22,7 +22,10 @@ main = do
     files <- filesUnderPath pathToWatch [".", "..", "dist-newstyle", ".git"]
     --print $ files
     let hsFiles = filter (endsWith ".hs") files
-    print $ hsFiles
+    watchBefore <- watchFiles hsFiles
+    watchAfter <- watchFiles hsFiles
+
+    print (watchBefore == watchAfter)
 
     -- runTests pathToWatch
     -- mainLoop pathToWatch

@@ -5,6 +5,8 @@ import Test.Tasty.HUnit
 
 import Helpers
 
+data TestFile = TestFile { filePath :: String, timeStamp :: Int } deriving (Show, Eq)
+
 unitTests :: TestTree
 unitTests = 
     testGroup "Unit Tests"
@@ -22,10 +24,10 @@ unitTests =
         testGroup "scratch"
         [
             let 
-                dirContents = [".", "..", "a"]
-                fold = foldr (\x acc -> filter (/= x) acc) dirContents [".", ".."]
+                f1 = TestFile "a" 123
+                f2 = TestFile "a" 123
             in
-                testCase "testing foldr" $ fold @?= ["a"]
+                testCase "testing TestFile" $ f1 @?= f2
         ]
     ]
 
