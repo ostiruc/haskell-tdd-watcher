@@ -44,14 +44,10 @@ filesUnderPaths (fp:fps) ignores = do
     isFile <- doesFileExist fp
     if isDir then do
         dirContents <- getDirectoryContents fp
-        filesUnderPaths 
-            ( 
-                (
-                    map (\x -> fp ++ "/" ++ x) 
-                    $ (foldr (\x acc -> filter (/= x) acc) dirContents ignores)
-                ) ++ fps
-            ) 
-            ignores
+        let
+            subContents = map (\x -> fp ++ "/" ++ x) filteredContents
+            filteredContents = (foldr (\x acc -> filter (/= x) acc) dirContents ignores)
+        filesUnderPaths (subContents ++ fps) ignores
     else if isFile then do
         fpsFiles <- filesUnderPaths fps ignores
         return (fp:fpsFiles)
