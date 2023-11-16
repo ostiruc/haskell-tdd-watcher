@@ -20,7 +20,9 @@ main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
     files <- filesUnderPath pathToWatch [".", "..", "dist-newstyle", ".git"]
-    print $ files
-    print $ filter (endsWith ".hs") files
+    --print $ files
+    let hsFiles = filter (endsWith ".hs") files
+    print $ hsFiles
+
     -- runTests pathToWatch
     -- mainLoop pathToWatch

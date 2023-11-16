@@ -29,8 +29,14 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
+-- TODO: Figure out watched files
+--data WatchedFile = ...
+
+--getWatchedFiles :: String -> [String] [WatchedFile]
+--modTime <- getModificationTime (head hsFiles)
+
 filesUnderPath :: String -> [String] -> IO [String] 
-filesUnderPath filePath ignores= do 
+filesUnderPath filePath ignores = do 
     isDir <- doesDirectoryExist filePath
     if isDir then do
         filesUnderPaths [filePath] ignores
