@@ -1,32 +1,26 @@
 module Main where
 
 import Control.Concurrent
-import System.Environment
-import System.Directory
-import System.Process
 
-resolvePathToWatch :: IO String
-resolvePathToWatch = do
-    args <- getArgs
-    path <- (makeAbsolute (head args))
-    return path
+import Helpers
 
-runTests :: String -> IO ()
-runTests dir = do 
-    putStrLn "\n*** TEST RUN ***\n"
-    output <- readCreateProcess (proc "cabal" ["test"]) { cwd = Just dir } ""
-    putStrLn output
-    putStrLn "\n*** TEST COMPLETE ***\n"
-
-mainLoop :: String -> IO ()
-mainLoop pathToWatch = do
+mainLoop :: String -> [WatchedFile] -> IO ()
+mainLoop pathToWatch filesBefore = do
     threadDelay 1000000
-    runTests pathToWatch
-    mainLoop pathToWatch
+    files <- filesUnderPath pathToWatch [".", "..", "dist-newstyle", ".git"]
+    filesAfter <- watchFiles (filter (endsWith ".hs") files)
+    if filesBefore /= filesAfter then 
+        runTests pathToWatch 
+    else 
+        putStrLn ("skipped")
+    mainLoop pathToWatch filesAfter
 
 main :: IO ()
 main = do
     pathToWatch <- resolvePathToWatch
     putStrLn ("Watching: " ++ pathToWatch)
+    files <- filesUnderPath pathToWatch [".", "..", "dist-newstyle", ".git"]
+    filesBefore <- watchFiles (filter (endsWith ".hs") files)
+
     runTests pathToWatch
-    mainLoop pathToWatch
+    mainLoop pathToWatch filesBefore
