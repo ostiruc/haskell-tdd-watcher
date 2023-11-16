@@ -29,35 +29,37 @@ runTests dir = do
     putStrLn output
     putStrLn "\n*** TEST COMPLETE ***\n"
 
-filesUnderPath :: String -> IO [String]
-filesUnderPath filePath = do 
+filesUnderPath :: String -> [String] -> IO [String] 
+filesUnderPath filePath ignores= do 
     isDir <- doesDirectoryExist filePath
     if isDir then do
-        filesUnderPaths [filePath]
+        filesUnderPaths [filePath] ignores
     else
         return []
 
-filesUnderPaths :: [String] -> IO [String]
-filesUnderPaths [] = return []
-filesUnderPaths (fp:fps) = do
+filesUnderPaths :: [String] -> [String] -> IO [String]
+filesUnderPaths [] _ = return []
+filesUnderPaths (fp:fps) ignores = do
     isDir <- doesDirectoryExist fp
     isFile <- doesFileExist fp
     if isDir then do
         dirContents <- getDirectoryContents fp
         filesUnderPaths 
-            $ (
-                map (\x -> fp ++ "/" ++ x) 
-                $ (foldr (\x acc -> filter (/= x) acc) dirContents [".", "..", "dist-newstyle", ".git"])
-            ) ++ fps
+            ( 
+                (
+                    map (\x -> fp ++ "/" ++ x) 
+                    $ (foldr (\x acc -> filter (/= x) acc) dirContents ignores)
+                ) ++ fps
+            ) 
+            ignores
     else if isFile then do
-        fpsFiles <- filesUnderPaths fps
+        fpsFiles <- filesUnderPaths fps ignores
         return (fp:fpsFiles)
     else
-        filesUnderPaths fps
+        filesUnderPaths fps ignores
 
 hasChanges :: [String] -> IO Bool
 hasChanges (filePath:_) = do
-    -- TODO: Flip around to do tail end directory recurison
     isDir <- doesDirectoryExist filePath
     if isDir then do
         dirContents <- getDirectoryContents filePath
