@@ -7,7 +7,7 @@
 - ABANDONED - US.5 - When receiving an input of Ctrl-D, the program stops
 - ALREADYWORKS - US.6 - When running tests, the command 'cabal test' is run in directory being watched.
 - ALREADYWORKS - US.7 - When running tests, the ouptut of the command 'cabal test' is outputted by the program
-- US.8 - When no argument is given, it watches the current directory
+- DONE - US.8 - When no argument is given, it watches the current directory
 
 # Bugs
 
