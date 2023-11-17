@@ -20,7 +20,8 @@ removeSuffix suffix str
 resolvePathToWatch :: IO String
 resolvePathToWatch = do
     args <- getArgs
-    path <- (makeAbsolute (head args))
+    let pathArg = if args /= [] then head args else "."
+    path <- makeAbsolute pathArg
     return (removeSuffix "/" path)
 
 runTests :: String -> IO ()
