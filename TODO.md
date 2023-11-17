@@ -11,4 +11,4 @@
 
 # Bugs
 
-- B.1 - A failing test will stop the program; it should run and display the errors
+- DONE - B.1 - A failing test will stop the program; it should run and display the errors

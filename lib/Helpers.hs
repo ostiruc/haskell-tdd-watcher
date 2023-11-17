@@ -26,8 +26,8 @@ resolvePathToWatch = do
 runTests :: String -> IO ()
 runTests dir = do 
     putStrLn "\n*** TEST RUN ***\n"
-    output <- readCreateProcess (proc "cabal" ["test"]) { cwd = Just dir } ""
-    putStrLn output
+    (_, stdout, _) <- readCreateProcessWithExitCode (proc "cabal" ["test"]) { cwd = Just dir } ""
+    putStr stdout
     putStrLn "\n*** TEST COMPLETE ***\n"
 
 data WatchedFile = WatchedFile { 
